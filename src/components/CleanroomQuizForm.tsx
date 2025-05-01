@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { FormProvider, useFormContext } from '../contexts/FormContext';
 import FormStepper from './FormStepper';
@@ -57,7 +58,7 @@ const CleanroomQuizForm: React.FC = () => {
       <div className="mt-10 text-center text-xs text-gray-500">
         <p>
           Your information is secure and will only be used to process your quote request.
-          See our <a href="#" className="text-cleanroom-500 hover:underline transition-colors duration-200">Privacy Policy</a> for details.
+          See our <a href="https://www.cleanroomsolutions.com/legal/privacy-policy" className="text-cleanroom-500 hover:underline transition-colors duration-200">Privacy Policy</a> for details.
         </p>
       </div>
     </div>
