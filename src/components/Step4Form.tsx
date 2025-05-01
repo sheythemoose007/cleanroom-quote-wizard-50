@@ -2,11 +2,11 @@
 import React, { useState } from 'react';
 import { useFormContext } from '../contexts/FormContext';
 import { validateStep } from '../utils/validation';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Checkbox } from '@/components/ui/checkbox';
 import { toast } from '@/components/ui/sonner';
+import ContactFormFields from './forms/ContactFormFields';
+import HoneypotField from './forms/HoneypotField';
+import ConsentCheckbox from './forms/ConsentCheckbox';
+import FormControls from './forms/FormControls';
 
 const Step4Form: React.FC = () => {
   const { 
@@ -69,102 +69,29 @@ const Step4Form: React.FC = () => {
       <h2 className="text-2xl font-bold mb-6 text-gray-800">Contact Information</h2>
       
       <form onSubmit={handleSubmit} className="space-y-6">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div>
-            <Label htmlFor="fullName" className="text-base block mb-2">Full Name*</Label>
-            <Input
-              id="fullName"
-              type="text"
-              placeholder="Your full name"
-              value={formData.fullName}
-              onChange={(e) => updateFormData({ fullName: e.target.value })}
-              className="w-full"
-            />
-            {errors.fullName && (
-              <p className="text-red-500 text-sm mt-1">{errors.fullName}</p>
-            )}
-          </div>
-          
-          <div>
-            <Label htmlFor="phoneNumber" className="text-base block mb-2">Phone Number*</Label>
-            <Input
-              id="phoneNumber"
-              type="tel"
-              placeholder="Your phone number"
-              value={formData.phoneNumber}
-              onChange={(e) => updateFormData({ phoneNumber: e.target.value })}
-              className="w-full"
-            />
-            {errors.phoneNumber && (
-              <p className="text-red-500 text-sm mt-1">{errors.phoneNumber}</p>
-            )}
-          </div>
-          
-          <div className="md:col-span-2">
-            <Label htmlFor="projectLocation" className="text-base block mb-2">Project Location (City, State/Country)*</Label>
-            <Input
-              id="projectLocation"
-              type="text"
-              placeholder="e.g., Boston, MA, USA"
-              value={formData.projectLocation}
-              onChange={(e) => updateFormData({ projectLocation: e.target.value })}
-              className="w-full"
-            />
-            {errors.projectLocation && (
-              <p className="text-red-500 text-sm mt-1">{errors.projectLocation}</p>
-            )}
-          </div>
-        </div>
+        <ContactFormFields 
+          fullName={formData.fullName}
+          phoneNumber={formData.phoneNumber}
+          projectLocation={formData.projectLocation}
+          errors={errors}
+          updateFormData={updateFormData}
+        />
         
-        {/* Honeypot field - hidden from users but bots will fill it out */}
-        <div className="hidden">
-          <Label htmlFor="website" className="text-base block mb-2">Website</Label>
-          <Input
-            id="website"
-            type="text"
-            tabIndex={-1}
-            autoComplete="off"
-            placeholder="Your website"
-            value={formData.website || ''}
-            onChange={(e) => updateFormData({ website: e.target.value })}
-          />
-        </div>
+        <HoneypotField
+          website={formData.website}
+          updateFormData={updateFormData}
+        />
         
-        <div className="flex items-start space-x-3 mt-6">
-          <Checkbox
-            id="consentGiven"
-            checked={formData.consentGiven}
-            onCheckedChange={(checked) => {
-              updateFormData({ consentGiven: checked === true });
-            }}
-            className="mt-1"
-          />
-          <Label htmlFor="consentGiven" className="text-sm font-normal">
-            I consent to receiving communications regarding my cleanroom quote request. 
-            I understand that my information will be processed in accordance with the privacy policy.
-          </Label>
-        </div>
-        {errors.consentGiven && (
-          <p className="text-red-500 text-sm">{errors.consentGiven}</p>
-        )}
+        <ConsentCheckbox
+          consentGiven={formData.consentGiven}
+          updateFormData={updateFormData}
+          error={errors.consentGiven}
+        />
 
-        <div className="flex justify-between pt-4">
-          <Button 
-            type="button"
-            onClick={handleBack}
-            variant="outline"
-            className="border-cleanroom-500 text-cleanroom-500 hover:bg-cleanroom-50"
-          >
-            Back
-          </Button>
-          <Button 
-            type="submit"
-            disabled={isSubmitting}
-            className="bg-cleanroom-500 hover:bg-cleanroom-600 text-white min-w-[200px]"
-          >
-            {isSubmitting ? 'Submitting...' : 'Get My Modular Cleanroom Quote'}
-          </Button>
-        </div>
+        <FormControls 
+          onBack={handleBack}
+          isSubmitting={isSubmitting}
+        />
       </form>
     </div>
   );
