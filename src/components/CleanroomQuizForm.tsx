@@ -1,5 +1,4 @@
-
-import React from 'react';
+import React, { useState } from 'react';
 import { FormProvider, useFormContext } from '../contexts/FormContext';
 import FormStepper from './FormStepper';
 import Step1Form from './Step1Form';
@@ -7,15 +6,23 @@ import Step2Form from './Step2Form';
 import Step3Form from './Step3Form';
 import Step4Form from './Step4Form';
 import SuccessMessage from './SuccessMessage';
+import EmailVerificationGate from './EmailVerificationGate';
 
 const FormContent: React.FC = () => {
   const { currentStep, submissionSuccess } = useFormContext();
+  const [isVerified, setIsVerified] = useState(false);
 
   // If submission was successful, show the success message
   if (submissionSuccess) {
     return <SuccessMessage />;
   }
 
+  // If email is not verified, show the verification gate
+  if (!isVerified) {
+    return <EmailVerificationGate onVerified={() => setIsVerified(true)} />;
+  }
+
+  // Otherwise, show the form steps
   return (
     <div className="animate-fade-in">
       <FormStepper />

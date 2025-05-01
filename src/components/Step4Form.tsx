@@ -20,21 +20,9 @@ const Step4Form: React.FC = () => {
   } = useFormContext();
   
   const [errors, setErrors] = useState<Record<string, string>>({});
-  const [isBusinessEmail, setIsBusinessEmail] = useState(true);
 
   const handleBack = () => {
     setCurrentStep(3);
-  };
-
-  const checkEmailDomain = (email: string) => {
-    if (!email.includes('@')) return true;
-    
-    const domain = email.split('@')[1].toLowerCase();
-    const commonFreeEmails = ['gmail.com', 'yahoo.com', 'hotmail.com', 'outlook.com', 'aol.com', 'icloud.com'];
-    
-    const isBusiness = !commonFreeEmails.includes(domain);
-    setIsBusinessEmail(isBusiness);
-    return isBusiness;
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -52,13 +40,6 @@ const Step4Form: React.FC = () => {
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
       return;
-    }
-
-    // Check if it's a business email
-    const isBusinessEmail = checkEmailDomain(formData.businessEmail);
-    if (!isBusinessEmail) {
-      // We'll show a warning but still allow submission
-      toast.warning("A business email is preferred for requesting quotes.");
     }
     
     setIsSubmitting(true);
@@ -105,27 +86,6 @@ const Step4Form: React.FC = () => {
           </div>
           
           <div>
-            <Label htmlFor="businessEmail" className="text-base block mb-2">Business Email*</Label>
-            <Input
-              id="businessEmail"
-              type="email"
-              placeholder="your.name@company.com"
-              value={formData.businessEmail}
-              onChange={(e) => {
-                updateFormData({ businessEmail: e.target.value });
-                checkEmailDomain(e.target.value);
-              }}
-              className={`w-full ${!isBusinessEmail && formData.businessEmail ? 'border-yellow-500' : ''}`}
-            />
-            {!isBusinessEmail && formData.businessEmail && (
-              <p className="text-yellow-600 text-sm mt-1">Business email addresses are preferred.</p>
-            )}
-            {errors.businessEmail && (
-              <p className="text-red-500 text-sm mt-1">{errors.businessEmail}</p>
-            )}
-          </div>
-          
-          <div>
             <Label htmlFor="phoneNumber" className="text-base block mb-2">Phone Number*</Label>
             <Input
               id="phoneNumber"
@@ -137,21 +97,6 @@ const Step4Form: React.FC = () => {
             />
             {errors.phoneNumber && (
               <p className="text-red-500 text-sm mt-1">{errors.phoneNumber}</p>
-            )}
-          </div>
-          
-          <div>
-            <Label htmlFor="companyName" className="text-base block mb-2">Company Name*</Label>
-            <Input
-              id="companyName"
-              type="text"
-              placeholder="Your company name"
-              value={formData.companyName}
-              onChange={(e) => updateFormData({ companyName: e.target.value })}
-              className="w-full"
-            />
-            {errors.companyName && (
-              <p className="text-red-500 text-sm mt-1">{errors.companyName}</p>
             )}
           </div>
           
