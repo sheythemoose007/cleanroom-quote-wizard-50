@@ -20,42 +20,45 @@ const FormStepper: React.FC = () => {
   return (
     <div className="mb-8">
       <div className="hidden sm:flex items-center justify-between">
-        {steps.map((step, index) => (
-          <React.Fragment key={step.number}>
-            {/* Step indicator */}
-            <div className="flex flex-col items-center">
-              <div
-                className={`flex items-center justify-center w-10 h-10 rounded-full border-2 
-                ${
-                  currentStep === step.number
-                    ? 'border-cleanroom-500 bg-cleanroom-500 text-white'
-                    : currentStep > step.number
-                    ? 'border-cleanroom-500 bg-cleanroom-100 text-cleanroom-500'
-                    : 'border-gray-300 bg-white text-gray-400'
-                }`}
-              >
-                {currentStep > step.number ? (
-                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                  </svg>
-                ) : (
-                  <span className="text-sm font-medium">{step.number}</span>
-                )}
+        {steps.map((step, index) => {
+          // Using div instead of React.Fragment to avoid the error
+          return (
+            <div key={step.number} className="flex items-center">
+              {/* Step indicator */}
+              <div className="flex flex-col items-center">
+                <div
+                  className={`flex items-center justify-center w-10 h-10 rounded-full border-2 
+                  ${
+                    currentStep === step.number
+                      ? 'border-cleanroom-500 bg-cleanroom-500 text-white'
+                      : currentStep > step.number
+                      ? 'border-cleanroom-500 bg-cleanroom-100 text-cleanroom-500'
+                      : 'border-gray-300 bg-white text-gray-400'
+                  }`}
+                >
+                  {currentStep > step.number ? (
+                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                  ) : (
+                    <span className="text-sm font-medium">{step.number}</span>
+                  )}
+                </div>
+                <span className={`mt-2 text-xs font-medium 
+                  ${currentStep >= step.number ? 'text-cleanroom-600' : 'text-gray-400'}`}>
+                  {step.title}
+                </span>
               </div>
-              <span className={`mt-2 text-xs font-medium 
-                ${currentStep >= step.number ? 'text-cleanroom-600' : 'text-gray-400'}`}>
-                {step.title}
-              </span>
+              
+              {/* Connector line between steps */}
+              {index < steps.length - 1 && (
+                <div className={`flex-1 h-0.5 mx-4 
+                  ${currentStep > index + 1 ? 'bg-cleanroom-500' : 'bg-gray-300'}`}
+                />
+              )}
             </div>
-            
-            {/* Connector line between steps */}
-            {index < steps.length - 1 && (
-              <div className={`flex-1 h-0.5 mx-4 
-                ${currentStep > index + 1 ? 'bg-cleanroom-500' : 'bg-gray-300'}`}
-              />
-            )}
-          </React.Fragment>
-        ))}
+          );
+        })}
       </div>
       
       {/* Mobile stepper */}
