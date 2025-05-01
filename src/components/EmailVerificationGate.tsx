@@ -33,6 +33,52 @@ const EmailVerificationGate: React.FC<EmailVerificationGateProps> = ({ onVerifie
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
+
+  // Helper function to check if company name is part of email domain
+  const checkCompanyEmailConsistency = (): { isConsistent: boolean, message?: string } => {
+    // Early return if either field is missing
+    if (!formData.businessEmail || !formData.companyName) {
+      return { isConsistent: true };
+    }
+
+    const emailDomain = formData.businessEmail.split('@')[1].toLowerCase();
+    if (!emailDomain) return { isConsistent: true };
+
+    // Extract root domain and subdomains
+    const domainParts = emailDomain.split('.');
+    const companyNameNormalized = formData.companyName.toLowerCase()
+      .replace(/\s+/g, '') // Remove spaces
+      .replace(/[^a-z0-9]/g, ''); // Remove special characters
+
+    // Break domain into parts to check against company name
+    // e.g., for "john@marketing.acme-corp.com"
+    // domainParts = ["marketing", "acme-corp", "com"]
+    
+    // Remove common TLDs and check remaining parts
+    const relevantDomainParts = domainParts.filter(part => 
+      !['com', 'org', 'net', 'io', 'co', 'gov', 'edu'].includes(part)
+    );
+    
+    // Check if any domain part resembles the company name
+    const anyPartMatches = relevantDomainParts.some(part => {
+      // Normalize domain part
+      const normalizedPart = part.replace(/[^a-z0-9]/g, '');
+      
+      // Check for partial matches in either direction
+      return normalizedPart.includes(companyNameNormalized) || 
+             companyNameNormalized.includes(normalizedPart);
+    });
+
+    if (!anyPartMatches && domainParts.length > 1) {
+      // No match found but domain looks legitimate
+      return { 
+        isConsistent: false, 
+        message: "Your email domain doesn't appear to match your company name. Please verify both are correct."
+      };
+    }
+    
+    return { isConsistent: true };
+  };
   
   const handleVerify = async () => {
     if (!validateFields()) return;
@@ -48,8 +94,13 @@ const EmailVerificationGate: React.FC<EmailVerificationGateProps> = ({ onVerifie
       const domain = formData.businessEmail.split('@')[1].toLowerCase();
       const commonFreeEmails = ['gmail.com', 'yahoo.com', 'hotmail.com', 'outlook.com', 'aol.com', 'icloud.com'];
       
+      // Check email domain and company name consistency
+      const consistencyCheck = checkCompanyEmailConsistency();
+      
       if (commonFreeEmails.includes(domain)) {
         toast.warning("Business email addresses are preferred for quote requests, but we'll continue with your submission.");
+      } else if (!consistencyCheck.isConsistent) {
+        toast.warning(consistencyCheck.message);
       } else {
         toast.success("Email successfully verified!");
       }
