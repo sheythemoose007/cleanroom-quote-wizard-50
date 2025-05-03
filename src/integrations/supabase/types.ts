@@ -448,6 +448,63 @@ export type Database = {
           },
         ]
       }
+      ffu_quote_requests: {
+        Row: {
+          airflow_requirements: string | null
+          application: string
+          business_email: string
+          company_name: string
+          created_at: string
+          ffu_quantity: string
+          ffu_size: string
+          filtration_level: string
+          full_name: string
+          has_consent: boolean
+          id: string
+          phone_number: string
+          project_location: string
+          specific_features: string[] | null
+          submission_time: string
+          user_agent: string | null
+        }
+        Insert: {
+          airflow_requirements?: string | null
+          application: string
+          business_email: string
+          company_name: string
+          created_at?: string
+          ffu_quantity: string
+          ffu_size: string
+          filtration_level: string
+          full_name: string
+          has_consent?: boolean
+          id?: string
+          phone_number: string
+          project_location: string
+          specific_features?: string[] | null
+          submission_time?: string
+          user_agent?: string | null
+        }
+        Update: {
+          airflow_requirements?: string | null
+          application?: string
+          business_email?: string
+          company_name?: string
+          created_at?: string
+          ffu_quantity?: string
+          ffu_size?: string
+          filtration_level?: string
+          full_name?: string
+          has_consent?: boolean
+          id?: string
+          phone_number?: string
+          project_location?: string
+          specific_features?: string[] | null
+          submission_time?: string
+          user_agent?: string | null
+        }
+        Relationships: []
+      }
       gameplan_actions: {
         Row: {
           created_at: string
@@ -559,6 +616,60 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      mobile_cleanroom_quotes: {
+        Row: {
+          business_email: string
+          cleanroom_size: string
+          company_name: string
+          consent_given: boolean
+          created_at: string
+          duration_of_use: string
+          full_name: string
+          id: string
+          iso_classification: string
+          phone_number: string
+          primary_application: string
+          project_location: string
+          specific_features: string | null
+          user_agent: string | null
+          website: string | null
+        }
+        Insert: {
+          business_email: string
+          cleanroom_size: string
+          company_name: string
+          consent_given?: boolean
+          created_at?: string
+          duration_of_use: string
+          full_name: string
+          id?: string
+          iso_classification: string
+          phone_number: string
+          primary_application: string
+          project_location: string
+          specific_features?: string | null
+          user_agent?: string | null
+          website?: string | null
+        }
+        Update: {
+          business_email?: string
+          cleanroom_size?: string
+          company_name?: string
+          consent_given?: boolean
+          created_at?: string
+          duration_of_use?: string
+          full_name?: string
+          id?: string
+          iso_classification?: string
+          phone_number?: string
+          primary_application?: string
+          project_location?: string
+          specific_features?: string | null
+          user_agent?: string | null
+          website?: string | null
+        }
+        Relationships: []
       }
       monitoring_rules: {
         Row: {

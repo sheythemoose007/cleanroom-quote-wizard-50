@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Vault } from 'lucide-react';
 import { validateBusinessEmail } from '../utils/validation';
@@ -6,9 +7,12 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { toast } from '@/components/ui/sonner';
+import { supabase } from "@/integrations/supabase/client";
+
 interface EmailVerificationGateProps {
   onVerified: () => void;
 }
+
 const EmailVerificationGate: React.FC<EmailVerificationGateProps> = ({
   onVerified
 }) => {
@@ -18,6 +22,7 @@ const EmailVerificationGate: React.FC<EmailVerificationGateProps> = ({
   } = useFormContext();
   const [isVerifying, setIsVerifying] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
+
   const validateFields = (): boolean => {
     const newErrors: Record<string, string> = {};
     if (!formData.businessEmail) {
@@ -31,13 +36,27 @@ const EmailVerificationGate: React.FC<EmailVerificationGateProps> = ({
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
+
   const handleVerify = async () => {
     if (!validateFields()) return;
     setIsVerifying(true);
+    
     try {
-      // Here we could add an actual email domain verification API call
-      // For now, we'll just simulate a verification process
-      await new Promise(resolve => setTimeout(resolve, 800));
+      // Check for existing submissions from this email
+      const { data: existingSubmissions } = await supabase
+        .from('mobile_cleanroom_quotes')
+        .select('id, created_at')
+        .eq('business_email', formData.businessEmail)
+        .order('created_at', { ascending: false })
+        .limit(1);
+
+      // If they've submitted before, show a personalized message
+      if (existingSubmissions && existingSubmissions.length > 0) {
+        const lastSubmissionDate = new Date(existingSubmissions[0].created_at);
+        const formattedDate = lastSubmissionDate.toLocaleDateString();
+        
+        toast.info(`Welcome back! We see you previously requested a quote on ${formattedDate}.`);
+      }
 
       // Check if using common free email providers
       const domain = formData.businessEmail.split('@')[1].toLowerCase();
@@ -47,13 +66,16 @@ const EmailVerificationGate: React.FC<EmailVerificationGateProps> = ({
       } else {
         toast.success("Email successfully verified!");
       }
+      
       onVerified();
     } catch (error) {
+      console.error("Verification error:", error);
       toast.error("Verification failed. Please try again.");
     } finally {
       setIsVerifying(false);
     }
   };
+
   return <div className="bg-white rounded-lg shadow-lg p-8 w-full max-w-md mx-auto text-center transition-all duration-300 hover:shadow-xl animate-fade-in">
       <div className="flex justify-center mb-6">
         <div className="h-20 w-20 rounded-full bg-cleanroom-50 flex items-center justify-center text-cleanroom-500">
@@ -87,4 +109,5 @@ const EmailVerificationGate: React.FC<EmailVerificationGateProps> = ({
       </div>
     </div>;
 };
+
 export default EmailVerificationGate;

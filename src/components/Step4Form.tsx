@@ -7,6 +7,7 @@ import ContactFormFields from './forms/ContactFormFields';
 import HoneypotField from './forms/HoneypotField';
 import ConsentCheckbox from './forms/ConsentCheckbox';
 import FormControls from './forms/FormControls';
+import { supabase } from "@/integrations/supabase/client";
 
 const Step4Form: React.FC = () => {
   const { 
@@ -45,17 +46,50 @@ const Step4Form: React.FC = () => {
     setIsSubmitting(true);
     
     try {
-      // For now, we'll simulate a successful submission
-      // In production, this would connect to Supabase
-      await new Promise(resolve => setTimeout(resolve, 1500));
+      // Get user agent for analytics
+      const userAgent = navigator.userAgent;
       
-      // Log the form data for now (in production, this would be sent to Supabase)
-      console.log("Form submission data:", formData);
+      // Insert data into Supabase
+      const { data, error } = await supabase
+        .from('mobile_cleanroom_quotes')
+        .insert({
+          // Step 1: Application & Classification
+          primary_application: formData.primaryApplication,
+          iso_classification: formData.isoClassification,
+          
+          // Step 2: Size & Duration
+          cleanroom_size: formData.cleanroomSize,
+          duration_of_use: formData.durationOfUse,
+          
+          // Step 3: Logistics & Specifics
+          project_location: formData.projectLocation,
+          specific_features: formData.specificFeatures,
+          
+          // Step 4: Contact Information
+          full_name: formData.fullName,
+          business_email: formData.businessEmail,
+          phone_number: formData.phoneNumber,
+          company_name: formData.companyName,
+          
+          // Metadata
+          consent_given: formData.consentGiven,
+          user_agent: userAgent,
+          
+          // Honeypot
+          website: formData.website
+        })
+        .select();
+      
+      if (error) {
+        throw error;
+      }
+      
+      console.log("Quote request submitted successfully:", data);
       
       setSubmissionSuccess(true);
       toast.success("Your mobile cleanroom quote request has been successfully submitted!");
       
-    } catch (error) {
+    } catch (error: any) {
       console.error("Form submission error:", error);
       setSubmissionError("There was an error submitting your form. Please try again.");
       toast.error("There was an error submitting your form. Please try again.");
