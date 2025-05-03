@@ -105,6 +105,63 @@ export type Database = {
           },
         ]
       }
+      bsl_lab_qualifications: {
+        Row: {
+          biosafety_level: string
+          company_name: string
+          containment_features: string | null
+          created_at: string
+          deployment_timeframe: string
+          email: string
+          full_name: string
+          has_consent: boolean
+          id: string
+          lab_size: string
+          location: string
+          organization_type: string
+          phone: string
+          primary_application: string
+          submission_time: string
+          user_agent: string | null
+        }
+        Insert: {
+          biosafety_level: string
+          company_name: string
+          containment_features?: string | null
+          created_at?: string
+          deployment_timeframe: string
+          email: string
+          full_name: string
+          has_consent?: boolean
+          id?: string
+          lab_size: string
+          location: string
+          organization_type: string
+          phone: string
+          primary_application: string
+          submission_time?: string
+          user_agent?: string | null
+        }
+        Update: {
+          biosafety_level?: string
+          company_name?: string
+          containment_features?: string | null
+          created_at?: string
+          deployment_timeframe?: string
+          email?: string
+          full_name?: string
+          has_consent?: boolean
+          id?: string
+          lab_size?: string
+          location?: string
+          organization_type?: string
+          phone?: string
+          primary_application?: string
+          submission_time?: string
+          user_agent?: string | null
+        }
+        Relationships: []
+      }
       business_gameplans: {
         Row: {
           client_id: string

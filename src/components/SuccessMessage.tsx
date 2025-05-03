@@ -7,20 +7,18 @@ const SuccessMessage: React.FC = () => {
   const { formData, setCurrentStep, updateFormData } = useFormContext();
   
   const handleReset = () => {
-    // Reset form to initial state
+    // Reset form to initial state, using only properties defined in the FormData type
     updateFormData({
       primaryApplication: '',
       isoClassification: '',
       cleanroomSize: '',
-      layoutRequirements: '',
-      existingBuilding: '',
-      ceilingHeight: '',
-      completionTimeframe: '',
+      durationOfUse: '',
+      projectLocation: '',
+      specificFeatures: '',
       fullName: '',
       businessEmail: '',
       phoneNumber: '',
       companyName: '',
-      projectLocation: '',
       consentGiven: false,
     });
     setCurrentStep(1);
@@ -37,7 +35,7 @@ const SuccessMessage: React.FC = () => {
       <h2 className="text-2xl font-bold mb-4 text-gray-800">Quote Request Submitted!</h2>
       
       <p className="text-lg text-gray-600 mb-4">
-        Thank you, {formData.fullName}! Your modular cleanroom quote request has been successfully submitted.
+        Thank you, {formData.fullName}! Your mobile cleanroom quote request has been successfully submitted.
       </p>
       
       <p className="text-md text-gray-600 mb-8">
