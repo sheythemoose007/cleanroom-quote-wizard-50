@@ -43,11 +43,11 @@ const CleanroomQuizForm: React.FC = () => {
     <div className="bg-white rounded-lg shadow-lg p-6 transition-all duration-300 hover:shadow-xl">
       <div className="text-center mb-8">
         <h1 className="text-3xl font-bold text-gray-800 animate-fade-in">
-          Modular Cleanroom Quote Request
+          Mobile Cleanroom Quote Request
         </h1>
         <div className="w-20 h-1 bg-cleanroom-500 mx-auto mt-4 mb-4 rounded-full"></div>
         <p className="text-gray-600 mt-2 animate-fade-in" style={{ animationDelay: '0.2s' }}>
-          Complete this short questionnaire to receive a customized quote for your modular cleanroom project.
+          Complete this short questionnaire to receive a customized quote for your mobile cleanroom project.
         </p>
       </div>
       

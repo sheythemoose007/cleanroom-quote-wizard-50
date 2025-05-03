@@ -9,9 +9,9 @@ interface StepItem {
 }
 
 const steps: StepItem[] = [
-  { number: 1, title: 'Scope & Classification' },
-  { number: 2, title: 'Size & Layout' },
-  { number: 3, title: 'Facility & Timing' },
+  { number: 1, title: 'Application & Classification' },
+  { number: 2, title: 'Size & Duration' },
+  { number: 3, title: 'Logistics & Specifics' },
   { number: 4, title: 'Contact Information' },
 ];
 

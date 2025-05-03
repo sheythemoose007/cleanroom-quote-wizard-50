@@ -69,15 +69,10 @@ export const validateStep = (step: number, formData: any): Record<string, string
   // Fields to validate for each step
   const stepFields: Record<number, string[]> = {
     1: ['primaryApplication', 'isoClassification'],
-    2: ['cleanroomSize', 'layoutRequirements'],
-    3: ['existingBuilding', 'completionTimeframe'],
-    4: ['fullName', 'businessEmail', 'phoneNumber', 'companyName', 'projectLocation', 'consentGiven']
+    2: ['cleanroomSize', 'durationOfUse'],
+    3: ['projectLocation'], // specificFeatures is optional
+    4: ['fullName', 'businessEmail', 'phoneNumber', 'companyName', 'consentGiven']
   };
-  
-  // Special case for ceiling height - only required if existingBuilding is "Yes"
-  if (step === 3 && formData.existingBuilding === 'Yes') {
-    stepFields[3].push('ceilingHeight');
-  }
   
   // Validate each field for the current step
   stepFields[step]?.forEach(field => {

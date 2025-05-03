@@ -11,10 +11,10 @@ const Step1Form: React.FC = () => {
   const [errors, setErrors] = useState<Record<string, string>>({});
 
   const applicationOptions = [
-    'Manufacturing',
-    'Assembly',
-    'Pharmaceutical Packaging',
-    'Research Lab',
+    'Temporary Lab',
+    'Event Support',
+    'Remote Project',
+    'Equipment Housing',
     'Other'
   ];
 
@@ -23,7 +23,6 @@ const Step1Form: React.FC = () => {
     'ISO 6',
     'ISO 7',
     'ISO 8',
-    'Multiple/Zoned',
     'Unsure'
   ];
 
@@ -41,10 +40,10 @@ const Step1Form: React.FC = () => {
 
   return (
     <div className="animate-fade-in">
-      <h2 className="text-2xl font-bold mb-6 text-gray-800">Scope & Classification</h2>
+      <h2 className="text-2xl font-bold mb-6 text-gray-800">Application & Classification</h2>
       
       <div className="mb-6">
-        <h3 className="text-lg font-medium mb-3 text-gray-700">What is the primary application for the modular cleanroom?</h3>
+        <h3 className="text-lg font-medium mb-3 text-gray-700">What is the primary application for the mobile cleanroom?</h3>
         <div className="grid gap-4">
           <RadioGroup 
             value={formData.primaryApplication}

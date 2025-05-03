@@ -53,7 +53,7 @@ const Step4Form: React.FC = () => {
       console.log("Form submission data:", formData);
       
       setSubmissionSuccess(true);
-      toast.success("Your quote request has been successfully submitted!");
+      toast.success("Your mobile cleanroom quote request has been successfully submitted!");
       
     } catch (error) {
       console.error("Form submission error:", error);
@@ -77,6 +77,38 @@ const Step4Form: React.FC = () => {
           updateFormData={updateFormData}
         />
         
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
+            <Label htmlFor="businessEmail" className="text-base block mb-2">Business Email*</Label>
+            <Input
+              id="businessEmail"
+              type="email"
+              placeholder="Your business email"
+              value={formData.businessEmail}
+              onChange={(e) => updateFormData({ businessEmail: e.target.value })}
+              className="w-full"
+            />
+            {errors.businessEmail && (
+              <p className="text-red-500 text-sm mt-1">{errors.businessEmail}</p>
+            )}
+          </div>
+          
+          <div>
+            <Label htmlFor="companyName" className="text-base block mb-2">Company Name*</Label>
+            <Input
+              id="companyName"
+              type="text"
+              placeholder="Your company name"
+              value={formData.companyName}
+              onChange={(e) => updateFormData({ companyName: e.target.value })}
+              className="w-full"
+            />
+            {errors.companyName && (
+              <p className="text-red-500 text-sm mt-1">{errors.companyName}</p>
+            )}
+          </div>
+        </div>
+        
         <HoneypotField
           website={formData.website}
           updateFormData={updateFormData}
@@ -98,3 +130,6 @@ const Step4Form: React.FC = () => {
 };
 
 export default Step4Form;
+
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';

@@ -2,25 +2,23 @@
 import React, { createContext, useContext, useState, ReactNode } from 'react';
 
 export type FormData = {
-  // Step 1: Scope & Classification
+  // Step 1: Application & Classification
   primaryApplication: string;
   isoClassification: string;
   
-  // Step 2: Size & Layout
+  // Step 2: Size & Duration
   cleanroomSize: string;
-  layoutRequirements: string;
+  durationOfUse: string;
   
-  // Step 3: Facility & Timing
-  existingBuilding: string;
-  ceilingHeight: string;
-  completionTimeframe: string;
+  // Step 3: Logistics & Specifics
+  projectLocation: string;
+  specificFeatures: string;
   
   // Step 4: Contact Information
   fullName: string;
   businessEmail: string;
   phoneNumber: string;
   companyName: string;
-  projectLocation: string;
   
   // Consent
   consentGiven: boolean;
@@ -46,15 +44,13 @@ const defaultFormData: FormData = {
   primaryApplication: '',
   isoClassification: '',
   cleanroomSize: '',
-  layoutRequirements: '',
-  existingBuilding: '',
-  ceilingHeight: '',
-  completionTimeframe: '',
+  durationOfUse: '',
+  projectLocation: '',
+  specificFeatures: '',
   fullName: '',
   businessEmail: '',
   phoneNumber: '',
   companyName: '',
-  projectLocation: '',
   consentGiven: false,
 };
 

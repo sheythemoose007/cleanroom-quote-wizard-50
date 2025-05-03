@@ -26,7 +26,7 @@ const FormControls: React.FC<FormControlsProps> = ({
         disabled={isSubmitting}
         className="bg-cleanroom-500 hover:bg-cleanroom-600 text-white min-w-[200px]"
       >
-        {isSubmitting ? 'Submitting...' : 'Get My Modular Cleanroom Quote'}
+        {isSubmitting ? 'Submitting...' : 'Get My Mobile Cleanroom Quote'}
       </Button>
     </div>
   );
