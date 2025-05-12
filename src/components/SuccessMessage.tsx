@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { useFormContext } from '../contexts/FormContext';
 
 const SuccessMessage: React.FC = () => {
-  const { formData, setCurrentStep, updateFormData } = useFormContext();
+  const { formData, setCurrentStep, updateFormData, clearSavedData } = useFormContext();
   
   const handleReset = () => {
     // Reset form to initial state, using only properties defined in the FormData type
@@ -21,6 +21,10 @@ const SuccessMessage: React.FC = () => {
       companyName: '',
       consentGiven: false,
     });
+    
+    // Clear any saved data in localStorage
+    clearSavedData();
+    
     setCurrentStep(1);
   };
 

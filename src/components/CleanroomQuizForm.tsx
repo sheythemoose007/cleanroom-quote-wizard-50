@@ -8,14 +8,21 @@ import Step3Form from './Step3Form';
 import Step4Form from './Step4Form';
 import SuccessMessage from './SuccessMessage';
 import EmailVerificationGate from './EmailVerificationGate';
+import SavedFormPrompt from './SavedFormPrompt';
 
 const FormContent: React.FC = () => {
-  const { currentStep, submissionSuccess } = useFormContext();
+  const { currentStep, submissionSuccess, hasSavedData } = useFormContext();
   const [isVerified, setIsVerified] = useState(false);
+  const [showSavedPrompt, setShowSavedPrompt] = useState(hasSavedData);
 
   // If submission was successful, show the success message
   if (submissionSuccess) {
     return <SuccessMessage />;
+  }
+
+  // If we have saved data and haven't dismissed the prompt, show it
+  if (showSavedPrompt && hasSavedData) {
+    return <SavedFormPrompt onContinue={() => setShowSavedPrompt(false)} onStartNew={() => setShowSavedPrompt(false)} />;
   }
 
   // If email is not verified, show the verification gate
