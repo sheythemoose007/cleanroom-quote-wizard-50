@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { useFormContext } from '../contexts/FormContext';
 import { validateStep } from '../utils/validation';
@@ -7,8 +8,6 @@ import HoneypotField from './forms/HoneypotField';
 import ConsentCheckbox from './forms/ConsentCheckbox';
 import FormControls from './forms/FormControls';
 import { supabase } from "@/integrations/supabase/client";
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 
 const Step4Form: React.FC = () => {
   const { 
@@ -18,8 +17,7 @@ const Step4Form: React.FC = () => {
     isSubmitting,
     setIsSubmitting,
     setSubmissionSuccess,
-    setSubmissionError,
-    clearSavedData
+    setSubmissionError
   } = useFormContext();
   
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -87,9 +85,6 @@ const Step4Form: React.FC = () => {
       }
       
       console.log("Quote request submitted successfully:", data);
-      
-      // Clear saved data from localStorage after successful submission
-      clearSavedData();
       
       setSubmissionSuccess(true);
       toast.success("Your mobile cleanroom quote request has been successfully submitted!");
@@ -169,3 +164,6 @@ const Step4Form: React.FC = () => {
 };
 
 export default Step4Form;
+
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';

@@ -303,30 +303,6 @@ export type Database = {
           },
         ]
       }
-      contact_forms: {
-        Row: {
-          created_at: string | null
-          id: string
-          name: string
-          owner_id: string
-          slug: string
-        }
-        Insert: {
-          created_at?: string | null
-          id?: string
-          name: string
-          owner_id: string
-          slug: string
-        }
-        Update: {
-          created_at?: string | null
-          id?: string
-          name?: string
-          owner_id?: string
-          slug?: string
-        }
-        Relationships: []
-      }
       dashboard_widgets: {
         Row: {
           configuration: Json
@@ -528,70 +504,6 @@ export type Database = {
           user_agent?: string | null
         }
         Relationships: []
-      }
-      form_fields: {
-        Row: {
-          form_id: string
-          id: string
-          label: string
-          order: number | null
-          required: boolean | null
-          type: string
-        }
-        Insert: {
-          form_id: string
-          id?: string
-          label: string
-          order?: number | null
-          required?: boolean | null
-          type: string
-        }
-        Update: {
-          form_id?: string
-          id?: string
-          label?: string
-          order?: number | null
-          required?: boolean | null
-          type?: string
-        }
-        Relationships: [
-          {
-            foreignKeyName: "form_fields_form_id_fkey"
-            columns: ["form_id"]
-            isOneToOne: false
-            referencedRelation: "contact_forms"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      form_submissions: {
-        Row: {
-          data: Json
-          form_id: string
-          id: string
-          submitted_at: string | null
-        }
-        Insert: {
-          data: Json
-          form_id: string
-          id?: string
-          submitted_at?: string | null
-        }
-        Update: {
-          data?: Json
-          form_id?: string
-          id?: string
-          submitted_at?: string | null
-        }
-        Relationships: [
-          {
-            foreignKeyName: "form_submissions_form_id_fkey"
-            columns: ["form_id"]
-            isOneToOne: false
-            referencedRelation: "contact_forms"
-            referencedColumns: ["id"]
-          },
-        ]
       }
       gameplan_actions: {
         Row: {
